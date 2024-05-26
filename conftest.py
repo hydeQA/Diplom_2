@@ -1,17 +1,12 @@
 import allure
 import pytest
-import requests
-import helper
 import burger_api
-import urls
-
 
 @allure.step("Создание шаблонного курьера")
 @pytest.fixture(scope='function')
 def default_user():
-    body = helper.new_user_login_password()
-    user_response = burger_api.create_user(body)
+    user_body = burger_api.create_user_body()
+    user_response = burger_api.create_user(user_body)
     yield user_response
-    access_token = requests.post(urls.BASE_URL + urls.CREATE_USER_ENDPOINT, json=body).json().get("accessToken")
-    headers = {"Authorization": access_token}
-    requests.delete(urls.BASE_URL + urls.DELETE_USER_ENDPOINT, headers=headers)
+    access_token = burger_api.get_access_token(user_response)
+    burger_api.delete_user(access_token)
