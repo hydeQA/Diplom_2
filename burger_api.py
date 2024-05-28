@@ -28,9 +28,14 @@ def login_user(login_data):
     login_response = requests.post(urls.BASE_URL + urls.LOGIN_USER_ENDPOINT, json=login_data)
     return login_response
 
+@allure.step("Изменить данные пользователя: email, password, name")
 def change_user_data(access_token, new_data):
     headers = {"Authorization": access_token}
     change_data_response = requests.patch(urls.BASE_URL + urls.PATCH_USER_ENDPOINT, headers=headers, json=new_data)
     return change_data_response
 
+@allure.step("Получение refreshtoken созданного пользователя")
+def get_refresh_token(user_response):
+    refresh_token = user_response.json().get("refreshToken")
+    return refresh_token
 
