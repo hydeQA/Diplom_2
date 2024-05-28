@@ -22,7 +22,15 @@ def delete_user(access_token):
     headers = {"Authorization": access_token}
     response_delete = requests.delete(urls.BASE_URL + urls.DELETE_USER_ENDPOINT, headers=headers)
     return response_delete
+
 @allure.step("Авторизоваться в приложении Stellar burger")
 def login_user(login_data):
     login_response = requests.post(urls.BASE_URL + urls.LOGIN_USER_ENDPOINT, json=login_data)
     return login_response
+
+def change_user_data(access_token, new_data):
+    headers = {"Authorization": access_token}
+    change_data_response = requests.patch(urls.BASE_URL + urls.PATCH_USER_ENDPOINT, headers=headers, json=new_data)
+    return change_data_response
+
+
