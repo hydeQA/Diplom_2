@@ -10,3 +10,15 @@ def default_user():
     yield user_response
     access_token = burger_api.get_access_token(user_response)
     burger_api.delete_user(access_token)
+
+
+@allure.step("Создание бургера из имеющихся ингридиентов")
+@pytest.fixture(scope='function')
+def default_burger():
+    ingredients = burger_api.get_ingredients().json()
+    ingredient_types = {"main": None, "sause": None, "bun": None}
+    for item in ingredients["data"]:
+        if item["type"] in ingredient_types and ingredient_types[item["type"]] is None:
+            ingredient_types[item["type"]] = item["_id"]
+    burger_ingredient = {"ingredients": list(ingredient_types.values())}
+    return burger_ingredient

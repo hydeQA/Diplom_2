@@ -39,3 +39,12 @@ def get_refresh_token(user_response):
     refresh_token = user_response.json().get("refreshToken")
     return refresh_token
 
+@allure.step("Получить список доступных ингредиентов")
+def get_ingredients():
+    response = requests.get(urls.BASE_URL + urls.GET_INGREDIENTS_ENDPOINT)
+    return response
+
+@allure.step("Создать заказ")
+def create_new_order(headers, ingredients):
+    response = requests.post(urls.BASE_URL + urls.CREATE_ORDER_ENDPOINT, headers=headers, json=ingredients)
+    return response
