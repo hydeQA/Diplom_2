@@ -2,7 +2,7 @@ import allure
 import pytest
 import burger_api
 
-@allure.step("Создание шаблонного курьера")
+@allure.step("Создать шаблонного курьера")
 @pytest.fixture(scope='function')
 def default_user():
     user_body = burger_api.create_user_body()
@@ -12,7 +12,7 @@ def default_user():
     burger_api.delete_user(access_token)
 
 
-@allure.step("Создание бургера из имеющихся ингридиентов")
+@allure.step("Создать бургер из имеющихся ингридиентов")
 @pytest.fixture(scope='function')
 def default_burger():
     ingredients = burger_api.get_ingredients().json()
