@@ -11,7 +11,7 @@ class TestCreateUser:
         create_user_request = default_user
         assert create_user_request.status_code == 200 and create_user_request.json() is not None
 
-    @allure.title("Проверка создания дубликата пользователя")
+    @allure.title("Ошибка 403 при попытке создания дубликата пользователя")
     @allure.description("Создание дубликата пользователя. Проверка статуса ответа и тела ответа")
     def test_duplicate_user_fail(self):
         body = burger_api.create_user_body()
@@ -22,7 +22,7 @@ class TestCreateUser:
         assert create_duplicate_request.status_code == 403 and create_duplicate_request.json()[
             "message"] == "User already exists"
 
-    @allure.title("Проверка ошибки при создании пользователя без одного из обязательных полей: email")
+    @allure.title("Ошибка 403 при создании пользователя без одного из обязательных полей: email, password, name")
     @allure.description("Отправить запрос на создание пользователя без обязательного поля и плучить ошибку 403")
     @pytest.mark.parametrize('key, value',
                              [

@@ -14,7 +14,7 @@ class TestCreateOrder:
     @allure.title("Ошибка 400 Bad Request при попытке сделать пустой заказ авторизованным пользователем")
     @allure.description(
         "При попытке сделать пустой заказ авторизованным пользователем, Бэкенд возвращает ошибку 400 Bad Request.")
-    def test_create_order_without_burger_auth_user_success(self, default_user_token):
+    def test_create_order_without_burger_auth_user_fail(self, default_user_token):
         headers = {"Authorization": default_user_token}
         create_response = burger_api.create_new_order(headers, None)
         assert create_response.status_code == 400 and create_response.json()["message"] == "Ingredient ids must be provided"
@@ -23,7 +23,7 @@ class TestCreateOrder:
     @allure.title("Ошибка 401 Unauthorized при попытке сделать заказ бургера неавторизованным пользователем")
     @allure.description(
         "Неавторизованный пользователь не может сделать заказ бургера. Бэкенд возвращает ошибку 401 Unauthorized.")
-    def test_create_order_burger_not_auth_user_success(self, default_burger):
+    def test_create_order_burger_not_auth_user_fail(self, default_burger):
         create_response = burger_api.create_new_order(None, default_burger)
         assert create_response.status_code == 401
 
@@ -31,7 +31,7 @@ class TestCreateOrder:
     @allure.title("Ошибка 400 Bad Request при попытке сделать пустой заказ неавторизованным пользователем")
     @allure.description(
         "При попытке сделать пустой заказ неавторизованным пользователем, Бэкенд возвращает ошибку 400 Bad Request.")
-    def test_create_order_without_burger_not_auth_user_success(self):
+    def test_create_order_without_burger_not_auth_user_fail(self):
         create_response = burger_api.create_new_order(None, None)
         assert create_response.status_code == 400 and create_response.json()["message"] == "Ingredient ids must be provided"
 

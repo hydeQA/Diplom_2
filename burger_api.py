@@ -48,3 +48,8 @@ def get_ingredients():
 def create_new_order(headers, ingredients):
     response = requests.post(urls.BASE_URL + urls.CREATE_ORDER_ENDPOINT, headers=headers, json=ingredients)
     return response
+
+@allure.step("Получить все заказы конкретного пользователя")
+def get_users_orders(headers):
+    response = requests.get(urls.BASE_URL + urls.GET_USER_ORDER, headers=headers)
+    return response
