@@ -22,3 +22,13 @@ def default_burger():
             ingredient_types[item["type"]] = item["_id"]
     burger_ingredient = {"ingredients": list(ingredient_types.values())}
     return burger_ingredient
+
+
+@allure.step("Создать шаблонного курьера и получить его access Token")
+@pytest.fixture(scope='function')
+def default_user_token():
+    user_body = burger_api.create_user_body()
+    user_response = burger_api.create_user(user_body)
+    access_token = burger_api.get_access_token(user_response)
+    yield access_token
+    burger_api.delete_user(access_token)
