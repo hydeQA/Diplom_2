@@ -8,8 +8,8 @@ class TestCreateUser:
     @allure.title("Проверка успешной регистрации пользователя")
     @allure.description("Создание пользователя. Проверка статуса ответа и тела ответа")
     def test_create_user_success(self, default_user):
-        create_user_request = default_user
-        assert create_user_request.status_code == 200 and create_user_request.json() is not None
+        user_response, access_token = default_user
+        assert user_response.status_code == 200 and user_response.json() is not None
 
     @allure.title("Ошибка 403 при попытке создания дубликата пользователя")
     @allure.description("Создание дубликата пользователя. Проверка статуса ответа и тела ответа")
