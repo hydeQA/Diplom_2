@@ -1,5 +1,6 @@
 import allure
 import burger_api
+import data
 from helper import ChangeTestDataHelper
 import pytest
 
@@ -20,7 +21,7 @@ class TestCreateUser:
         access_token = burger_api.get_access_token(user_response)
         burger_api.delete_user(access_token)
         assert create_duplicate_request.status_code == 403 and create_duplicate_request.json()[
-            "message"] == "User already exists"
+            "message"] == data.MESSAGE_DOUBLE_USER
 
     @allure.title("Ошибка 403 при создании пользователя без одного из обязательных полей: email, password, name")
     @allure.description("Отправить запрос на создание пользователя без обязательного поля и плучить ошибку 403")
@@ -33,4 +34,4 @@ class TestCreateUser:
     def test_create_user_without_field_fail(self, key, value):
         body = ChangeTestDataHelper.modify_create_user_body(key, value)
         user_response = burger_api.create_user(body)
-        assert user_response.status_code == 403 and user_response.json()["message"] == "Email, password and name are required fields"
+        assert user_response.status_code == 403 and user_response.json()["message"] == data.MESSAGE_CUT_DATA

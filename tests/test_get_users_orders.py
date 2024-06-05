@@ -1,5 +1,6 @@
 import allure
 import burger_api
+import data
 
 
 class TestGetUsersOrders:
@@ -25,4 +26,4 @@ class TestGetUsersOrders:
         burger_api.create_new_order(None, ingredients)
         orders_response = burger_api.get_users_orders(None)
         assert orders_response.status_code == 401
-        assert orders_response.json()["message"] == "You should be authorised"
+        assert orders_response.json()["message"] == data.MESSAGE_NOT_CHANGE

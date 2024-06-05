@@ -2,6 +2,9 @@ import allure
 import burger_api
 import pytest
 
+import data
+
+
 class TestLoginUser:
     @allure.title("Успешная авторизация существующего пользователя")
     @allure.description("Авторизация с email и password в теле запроса")
@@ -30,5 +33,5 @@ class TestLoginUser:
         login_response = burger_api.login_user(login_data)
         access_token = burger_api.get_access_token(user_response)
         burger_api.delete_user(access_token)
-        assert login_response.status_code == 401 and login_response.json()["message"] == "email or password are incorrect"
+        assert login_response.status_code == 401 and login_response.json()["message"] == data.MESSAGE_INCORRECT_DATA
 

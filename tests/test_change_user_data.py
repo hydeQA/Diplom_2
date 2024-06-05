@@ -1,5 +1,7 @@
 import allure
 import requests
+
+import data
 import urls
 import burger_api
 import pytest
@@ -43,4 +45,4 @@ class TestChangeUserData:
         change_response = requests.patch(urls.BASE_URL + urls.PATCH_USER_ENDPOINT, json=body_data)
         access_token = burger_api.get_access_token(create_response)
         burger_api.delete_user(access_token)
-        assert change_response.status_code == 401 and change_response.json()["message"] == "You should be authorised"
+        assert change_response.status_code == 401 and change_response.json()["message"] == data.MESSAGE_NOT_CHANGE
